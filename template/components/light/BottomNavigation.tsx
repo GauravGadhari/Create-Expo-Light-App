@@ -1,5 +1,5 @@
-import React from "react";
-import { View, TouchableOpacity, Text, StyleSheet, StyleProp, ViewStyle, TextStyle } from "react-native";
+import React, { useEffect } from "react";
+import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Animated, {
   useSharedValue,
@@ -42,6 +42,14 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({
   // Array to store the shared values for each tab icon scale
   const iconScales = state.routes.map(() => useSharedValue(1));
 
+  // Update icon scales when the index changes
+  useEffect(() => {
+    iconScales.forEach((scale, idx) => {
+      scale.value = idx === index ? withTiming(1.2, { duration: 150 }) : withTiming(1, { duration: 150 });
+    });
+    tabOffset.value = withTiming(index * 100); // Animate the indicator to the selected tab
+  }, [index]);
+
   const handlePress = (route: Route, i: number) => {
     const event = navigation.emit({
       type: "tabPress",
@@ -54,12 +62,6 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({
     }
 
     setIndex(i);
-    tabOffset.value = withTiming(i * 100); // Animate the indicator to the selected tab
-
-    // Animate the icon scale
-    iconScales.forEach((scale, idx) => {
-      scale.value = idx === i ? withTiming(1.2, { duration: 150 }) : withTiming(1, { duration: 150 });
-    });
   };
 
   return (

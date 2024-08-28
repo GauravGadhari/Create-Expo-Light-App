@@ -49,7 +49,7 @@ const Icon: React.FC<IconProps> = ({ name = 'alert-outline', size = 24, color, s
   const theme = useTheme();
   return (
     <PaperIcon
-      name={name}
+      source={name}
       size={size}
       color={color || theme.colors.onBackground}
       style={[styles.icon, style]}
