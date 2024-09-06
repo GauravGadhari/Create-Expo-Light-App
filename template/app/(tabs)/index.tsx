@@ -1,11 +1,8 @@
 import React from "react";
-import { List, Paragraph, Text, Title } from "react-native-paper";
-import { useJustDialog } from "@/context/JustDialog";
-import AlertContainer from "../../components/light/AlertContainer";
-import { useBottomSheet } from "@/context/AnimatedBottomSheet";
-import { useDrawer } from "@/context/DrawerContext";
+import { Button, List, Paragraph, Text, Title } from "react-native-paper";
 import { View } from "react-native";
-import { LightScrollView, LightSwitch } from "@/components/light";
+import { LightAlert, LightScrollView, LightSwitch } from "@/components/light";
+import { useBottomSheet, useDrawer, useJustDialog } from "@/context";
 
 const IndexScreen = () => {
   const [switchValue, setSwitchValue] = React.useState(false);
@@ -15,20 +12,20 @@ const IndexScreen = () => {
 
   const handleShowAnimatedDialog = () => {
     showJustDialog(() => (
-      <AlertContainer>
-        <AlertContainer.Icon />
-        <AlertContainer.Title text="Light" />
-        <AlertContainer.Content>
+      <LightAlert>
+        <LightAlert.Icon />
+        <LightAlert.Title text="Light" />
+        <LightAlert.Content>
           <Paragraph>A billion dollar company of future but now starting, we will be listed on top of google, microsoft, meta, amazon as well as possible...</Paragraph>
-        </AlertContainer.Content>
-        <AlertContainer.Actions>
-          <AlertContainer.DeclineButton
+        </LightAlert.Content>
+        <LightAlert.Actions>
+          <LightAlert.DeclineButton
             text="Cancel"
             onPress={handleDialogClose}
           />
-          <AlertContainer.AcceptButton text="OK" onPress={handleDialogClose} />
-        </AlertContainer.Actions>
-      </AlertContainer>
+          <LightAlert.AcceptButton text="OK" onPress={handleDialogClose} />
+        </LightAlert.Actions>
+      </LightAlert>
     ));
   };
 
