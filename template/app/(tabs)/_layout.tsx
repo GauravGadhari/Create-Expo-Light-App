@@ -2,13 +2,12 @@ import React, { useState, useRef } from "react";
 import { View, StyleSheet } from "react-native";
 import { Appbar, Menu, Title } from "react-native-paper";
 import { useRouter } from "expo-router";
-import { useDynamicTheme } from "@/context/Themes";
 import BottomNavigation from "@/components/light/BottomNavigation";
 import PagerView from "react-native-pager-view";
 import IndexScreen from ".";
 import CallsScreen from "./calls";
 import StoriesScreen from "./stories";
-import { useDrawer } from "@/context/DrawerContext";
+import { useDrawer, useDynamicTheme } from "@/context";
 
 interface Route {
   key: string;
@@ -19,7 +18,6 @@ interface Route {
 
 export default function TabLayout() {
   const { theme } = useDynamicTheme();
-  const router = useRouter();
   const [index, setIndex] = useState(0);
   const pagerRef = useRef<PagerView>(null); // Reference to PagerView
   const { openDrawer } = useDrawer();
@@ -40,29 +38,21 @@ export default function TabLayout() {
   const openMenu = () => setMenuVisible(true);
   const closeMenu = () => setMenuVisible(false);
 
-  const handleMenuAction = (action: string) => {
-    switch (action) {
-      case "New Group":
-        console.log("New Group action");
-        break;
-      case "Invite Friends":
-        console.log("Invite Friends action");
-        break;
-      case "Archived Chats":
-        router.push("../screens/archive");
-        break;
-      case "Settings":
-        router.push("../screens/setting");
-        break;
-      default:
-        break;
-    }
-    closeMenu();
-  };
-
   // Handle drawer actions
   const handleDrawerOpen = () => {
-    openDrawer(() => <Title>Light</Title>, 1);
+    openDrawer(
+      () => (
+        <Title
+          style={{
+            paddingTop: 50,
+            padding: 10,
+          }}
+        >
+          Me tulsi tere aangan ki bina tel ke diya jalake to dikha.
+        </Title>
+      ),
+      1
+    );
   };
 
   return (
@@ -72,7 +62,7 @@ export default function TabLayout() {
       <Appbar.Header style={styles.appBar}>
         <Appbar.Action icon="menu" onPress={handleDrawerOpen} />
         <Appbar.Content
-          title="Light Components"
+          title="MTTAKBTKDJKTD"
           titleStyle={styles.title}
           style={styles.appBarContent}
         />
@@ -90,24 +80,9 @@ export default function TabLayout() {
           contentStyle={styles.menuContainer}
         >
           <Menu.Item
-            onPress={() => handleMenuAction("New Group")}
-            title="New Group"
+            onPress={() => console.log("Menu clicked")}
+            title="Menu"
             leadingIcon="account-outline"
-          />
-          <Menu.Item
-            onPress={() => handleMenuAction("Archived Chats")}
-            title="Archived Chats"
-            leadingIcon="archive-arrow-down-outline"
-          />
-          <Menu.Item
-            onPress={() => handleMenuAction("Invite Friends")}
-            title="Invite Friends"
-            leadingIcon="account-plus-outline"
-          />
-          <Menu.Item
-            onPress={() => handleMenuAction("Settings")}
-            title="Settings"
-            leadingIcon="cog-outline"
           />
         </Menu>
       </Appbar.Header>

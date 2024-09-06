@@ -4,21 +4,21 @@ import {
   ThemeProvider,
 } from "@react-navigation/native";
 import { useFonts } from "expo-font";
-import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import "react-native-reanimated";
 import { PaperProvider } from "react-native-paper";
 import { useColorScheme } from "react-native";
-import { ThemeDynamicProvider, useDynamicTheme } from "@/context/Themes";
-import { JustDialogProvider } from "@/context/JustDialog";
-import { AnimatedDialogProvider } from "@/context/AnimatedDialog";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import TabLayout from "./(tabs)/_layout";
+import NotFoundScreen from "./+not-found";
+import { AnimatedDialogProvider, BottomSheetProvider, DrawerProvider, JustDialogProvider, ThemeDynamicProvider, useDynamicTheme } from "@/context";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { BottomSheetProvider } from "@/context/AnimatedBottomSheet";
-import { DrawerProvider } from "@/context/DrawerContext";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
+const Stack = createNativeStackNavigator();
 
 export default function RootLayout() {
   const [loaded] = useFonts({
@@ -54,22 +54,23 @@ function MainLayout() {
         >
           <BottomSheetProvider>
             <DrawerProvider>
-                <AnimatedDialogProvider>
-                  <JustDialogProvider>
-                    <Stack
-                      initialRouteName="(tabs)"
-                      screenOptions={{
-                        animation: "ios",
-                      }}
-                    >
+              <AnimatedDialogProvider>
+                <JustDialogProvider>
+                  <NavigationContainer independent>
+                    <Stack.Navigator>
                       <Stack.Screen
                         name="(tabs)"
                         options={{ headerShown: false }}
+                        component={TabLayout}
                       />
-                      <Stack.Screen name="+not-found" />
-                    </Stack>
-                  </JustDialogProvider>
-                </AnimatedDialogProvider>
+                      <Stack.Screen
+                        name="+not-found"
+                        component={NotFoundScreen}
+                      />
+                    </Stack.Navigator>
+                  </NavigationContainer>
+                </JustDialogProvider>
+              </AnimatedDialogProvider>
             </DrawerProvider>
           </BottomSheetProvider>
         </ThemeProvider>

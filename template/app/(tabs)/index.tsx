@@ -67,8 +67,8 @@ const IndexScreen = () => {
 
   return (
     <LightScrollView>
-      <Title style={{ textAlign: "center" }}>
-        LIGHT IN WEIGHT, {`\n`}LIGHT IN SPEED.
+      <Title style={{ textAlign: "center", padding: 10, }}>
+        Me tulsi tere aangan ki bina tel ke diya jalake to dikha.
       </Title>
       <List.Item
         title="Animated Switch"
